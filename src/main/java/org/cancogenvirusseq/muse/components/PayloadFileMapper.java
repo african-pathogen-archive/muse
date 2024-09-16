@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
@@ -31,7 +30,6 @@ import org.cancogenvirusseq.muse.model.UploadRequest;
 import org.cancogenvirusseq.muse.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -41,7 +39,6 @@ public class PayloadFileMapper {
 
   private static String multiTagDelimiter;
   private static List<String> columnKeys;
-
 
   @Value("${tsv.columnKeys:''}")
   public void setColumnKeys(List<String> keys) {
@@ -168,11 +165,11 @@ public class PayloadFileMapper {
           } else if (value.toString().trim().equals("")) {
             // empty string map to null value
             return "null";
-          } else if((!Objects.isNull(columnKeys) && columnKeys.contains(key)) && (value.toString().split(multiTagDelimiter).length>0)) {
-            //for multiple tags in single cell
+          } else if ((!Objects.isNull(columnKeys) && columnKeys.contains(key))
+              && (value.toString().split(multiTagDelimiter).length > 0)) {
+            // for multiple tags in single cell
             return StringUtils.stringToArrayOfStrings(value.toString(), multiTagDelimiter);
-          }
-          else {
+          } else {
             // for string append double quotes and escape any existing double quotes
             return format("\"%s\"", value.toString().replace("\"", "\\\""));
           }
@@ -185,8 +182,6 @@ public class PayloadFileMapper {
     log.debug("Templated String - {}", templatedStr);
     return new ObjectMapper().readValue(templatedStr, ObjectNode.class);
   }
-
-
 
   private static JsonNode createFilesObject(SubmissionFile submissionFile, String fileName) {
     val filesArray = JsonNodeFactory.instance.arrayNode(1);

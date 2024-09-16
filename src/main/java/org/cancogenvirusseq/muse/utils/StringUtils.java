@@ -1,9 +1,9 @@
 package org.cancogenvirusseq.muse.utils;
 
+import static java.lang.String.format;
+
 import java.util.regex.Pattern;
 import lombok.experimental.UtilityClass;
-
-import static java.lang.String.format;
 
 @UtilityClass
 public class StringUtils {
@@ -18,7 +18,7 @@ public class StringUtils {
     return INTEGER_PATTERN.matcher(s).matches();
   }
 
-  public static String stringToArrayOfStrings(String value, String delimiter){
+  public static String stringToArrayOfStrings(String value, String delimiter) {
     StringBuilder sb = new StringBuilder();
     for (String n : value.toString().split(delimiter)) {
       if (sb.length() > 0) sb.append(',');

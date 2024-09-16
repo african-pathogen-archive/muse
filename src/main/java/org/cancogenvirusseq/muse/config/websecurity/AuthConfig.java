@@ -81,7 +81,7 @@ public class AuthConfig {
         .csrf()
         .disable()
         .authorizeExchange()
-        .pathMatchers("/submissions/**", "/uploads/**", "/uploads-stream")
+        .pathMatchers("/submissions/**", "/uploads/**", "/uploads-stream", "/project/**")
         .authenticated()
         .pathMatchers(
             "/actuator/**",
